@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <title>
-      Inovation week
+      {% block title %} Innovation week {% endblock %}
     </title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -37,88 +37,20 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav ml-auto undraggable">
               <li class="nav-item active">
-                <a class="nav-item nav-link active" href="{% url 'index' %}">predictor <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="{% url 'index' %}">Map <span class="sr-only">(current)</span></a>
               </li>
-            
+              <li class="nav-item">
+                <a class="nav-item nav-link" href="{% url 'predictor' %}">Predictor</a>
+              </li>
+             
             </ul>
         </div>
       </nav>
-    <div class="container">
-    <main class="py-4">
+      {% block content %}
 
-        <div class="row">
-          <div class="col-md">
-
-            <div id="container"></div>
-
-            
-          </div>
-           
-        </div>
-    </main>
-  </div>
-
+      {% endblock %}
 </body>
 
-<script>
-  //https://jsfiddle.net/gh/get/library/pure/highslide-software/highcharts.com/tree/master/samples/mapdata/countries/be/be-all?fbclid=IwAR2X8903aUmCnhlFH5HwUMpmQRubRrTbPBcxAZem_fgnP06BN2qNnOCPgh0
-  // Prepare demo data
-// Data is joined to map using value of 'hc-key' property by default.
-// See API docs for 'joinBy' for more info on linking data and map.
-var data = [
-    ['be-3530', {{ brussel }}], //Brussel
-    ['be-3534', {{ westvlaanderen }}], //West-vlaanderen
-    ['be-3528', {{ liege }}], //Liege
-    ['be-3529', {{ waalsbrabant }}], //Waals-Brabant
-    ['be-3532', {{ vlaamsbrabant }}], //Vlaams-Brabant
-    ['be-489', {{ hennegouwen }}], //Hainaut
-    ['be-3535', {{ antwerpen }}], //Antwerpen
-    ['be-490', {{ limburg }}],//Limburg
-    ['be-3526', {{ namen }}], //Namur
-    ['be-3527', {{ luxemburg }}],//Luxembourg
-    ['be-3533', {{ oostvlaanderen }}] //Oost-Vlaanderen
-];
 
-// Create the chart
-Highcharts.mapChart('container', {
-    chart: {
-        map: 'countries/be/be-all'
-    },
-
-    title: {
-        text: 'Map of Belgium: predicted deads for each province tommorow'
-    },
-
-    subtitle: {
-        text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/be/be-all.js">Belgium</a>'
-    },
-
-    mapNavigation: {
-        enabled: true,
-        buttonOptions: {
-            verticalAlign: 'bottom'
-        }
-    },
-
-    colorAxis: {
-        min: 0
-    },
-
-    series: [{
-        data: data,
-        name: 'Predicted deads',
-        states: {
-            hover: {
-                color: '#BADA55'
-            }
-        },
-        dataLabels: {
-            enabled: true,
-            format: '{point.name}'
-        }
-    }]
-});
-
-</script>
 
 </html>

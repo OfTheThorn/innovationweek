@@ -7,13 +7,23 @@ from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+import pandas as pd
+
 # Create your views here.
 
 
 def index(response):
-    dict = {"westvlaanderen":1,"oostvlaanderen":2,"antwerpen":3,"limburg":4,"vlaamsbrabant":5,"brussel":6,"hennegouwen":7,"waalsbrabant":8,
-    "liege":9,"namen":10,"luxemburg":11}
-    return render(response,"main/base.html",dict)
+    dataset = pd.read_csv("../COVID19BE_CASES_AGESEX.csv")
+    total=dataset["CASES"].sum()
+    dataset=dataset.groupby(dataset['PROVINCE'])['CASES'].sum()
+    dict = {"westvlaanderen":dataset["WestVlaanderen"],"oostvlaanderen":dataset["OostVlaanderen"],"antwerpen":dataset["Antwerpen"],
+    "limburg":dataset["Limburg"],"vlaamsbrabant":dataset["VlaamsBrabant"],"brussel":dataset["Brussels"]
+    ,"hennegouwen":dataset["Hainaut"],"waalsbrabant":dataset["BrabantWallon"],
+    "liege":dataset["Liège"],"namen":dataset["Namur"],"luxemburg":dataset["Luxembourg"],"total":total}
+    return render(response,"main/index.html",dict)
+
+def predictor(response):
+    return render(response,"main/predictor.html")
 
 
 
